@@ -1,19 +1,17 @@
 <template>
-  <div class="submit-btn">
-    <button
-      :type="type"
-      :disabled="loading || disabled"
-      :class="{
-        [getType(styleType)]: true,
-        [getSize(styleType)]: true,
-        ['disabled']: loading || disabled
-      }"
-      @click="onclick"
-    >
-      <div v-if="loading" class="spin"><Loading /></div>
-      {{ title }}
-    </button>
-  </div>
+  <button
+    :type="type"
+    :disabled="loading || disabled"
+    :class="{
+      [getType(styleType)]: true,
+      [getSize(size)]: true,
+      ['disabled']: loading || disabled
+    }"
+    @click="onclick"
+  >
+    <div v-if="loading" class="spin"><Loading /></div>
+    {{ title }}
+  </button>
 </template>
 
 <script>
@@ -36,9 +34,9 @@ export default {
     const getSize = size => {
       switch (size) {
         case SizeButton.default:
-          return 'default'
+          return 'defaultSize'
         case SizeButton.full:
-          return 'full'
+          return 'fullSize'
         default:
           return ''
       }
@@ -85,27 +83,9 @@ button {
 .bg-danger {
   background-color: #f44336;
 }
-.defaultSize {
-  padding: 10px 40px;
-}
+
 .fullSize {
   width: 100%;
-}
-/* button {
-  background-color: #04aa6d;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-.submit-btn {
   margin-top: 20px;
-  width: 100%;
-} */
+}
 </style>

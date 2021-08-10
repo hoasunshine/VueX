@@ -1,47 +1,38 @@
 <template>
-  <div class="container-fluid">
-    <form @submit="onSubmit">
-      <div class="row">
-        <div class="col-100">
-          <Input v-model="currentVal.title" :required="true" />
+  <form @submit="onSubmit">
+    <div class="input-type">
+      <Input v-model="currentVal.title" :required="true" />
+    </div>
+    <div class="title">
+      <label>Description</label>
+    </div>
+    <div class="input-type">
+      <Textarea v-model="currentVal.description" />
+    </div>
+    <div class="row">
+      <div class="col-50 title">
+        <label>Due Date</label>
+        <div class="date-input">
+          <Date v-model="currentVal.date" />
         </div>
       </div>
-      <div class="row">
-        <div class="col-100 title">
-          <label>Description</label>
-        </div>
-        <div class="col-100">
-          <Textarea v-model="currentVal.description" />
+      <div class="col-50 title">
+        <label>Piority</label>
+        <div class="select-input">
+          <Select v-model="currentVal.piority" />
         </div>
       </div>
-      <div class="row">
-        <div class="col-50 title">
-          <label>Due Date</label>
-          <div class="date-input">
-            <Date v-model="currentVal.date" />
-          </div>
-        </div>
-        <div class="col-50 title">
-          <label>Piority</label>
-          <div class="select-input">
-            <Select v-model="currentVal.piority" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-100">
-          <Button
-            :type="'submit'"
-            :styleType="TypeButton.success"
-            :size="SizeButton.full"
-            :title="isUpdate ? 'Update' : 'Add'"
-            :loading="loading"
-            :onclick="() => {}"
-          />
-        </div>
-      </div>
-    </form>
-  </div>
+    </div>
+
+    <Button
+      :type="'submit'"
+      :styleType="TypeButton.success"
+      :size="SizeButton.full"
+      :title="isUpdate ? 'Update' : 'Add'"
+      :loading="loading"
+      :onclick="() => {}"
+    />
+  </form>
 </template>
 
 <script>
@@ -95,6 +86,7 @@ export default {
       this.loading = true
       if (this.isUpdate) {
         await this.updateTodo(this.currentVal).finally(() => {
+          alert('Updated!!!')
           this.loading = false
         })
       } else {
@@ -123,7 +115,11 @@ label {
 
 .title {
   text-align: left;
-  font-weight: 600;
+  font-weight: 300;
+}
+
+.input-type {
+  display: flex;
 }
 
 input[type='text'],
@@ -163,7 +159,7 @@ button {
 
 @media screen and (min-width: 600px) {
   .date-input {
-    margin-right: 10px;
+    margin-right: 30px;
   }
 }
 </style>

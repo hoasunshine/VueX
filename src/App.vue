@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-50">
-          <h1>Add Task</h1>
-          <TaskAction />
-        </div>
-        <div class="col-50">
-          <h1>To Do List</h1>
-          <TodoList />
-        </div>
+      <div class="task-action">
+        <h2>Add Task</h2>
+        <TaskAction />
       </div>
-    </div>
+      <div class="todo-list">
+        <h2>To Do List</h2>
+        <TodoList />
+      </div>
   </div>
 </template>
 
@@ -33,6 +29,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  justify-content: center;
 }
 
 * {
@@ -65,23 +63,18 @@ export default {
   clear: both;
 }
 
-.container-fluid {
-  border-radius: 5px;
-  /* background-color: #f2f2f2; */
-  padding: 20px;
+.task-action {
+  border: 1px solid;
+  padding: 0 30px 30px 30px;
+  width: 500px;
 }
 
-.container {
-  min-width: 16rem;
-  max-width: 25rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-@media screen and (max-width: 600px) {
-  .col-50 {
-    width: 100%;
-    margin-top: 0;
-  }
+.todo-list {
+  border: 1px solid;
+  border-left: none;
+  padding: 0 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 </style>

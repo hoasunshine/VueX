@@ -1,8 +1,8 @@
 <template>
-  <div class="row bulk-form">
-    <div class="col-50 title-text">Bulk Action</div>
-    <div class="row col-50">
-      <div class="col-50">
+  <div class="bulk-form">
+    <div class="title-text">Bulk Action:</div>
+    <div class="actions-btn">
+      <div class="done-btn">
         <Button
           :type="'button'"
           :styleType="TypeButton.primary"
@@ -11,7 +11,7 @@
           :onclick="CHECK_ALL_TODO"
         />
       </div>
-      <div class="col-50">
+      <div class="remove-btn">
         <Button
           :type="'button'"
           :styleType="TypeButton.danger"
@@ -27,13 +27,13 @@
 <script>
 import { mapMutations } from 'vuex'
 import Button from '../Elements/Button'
-import {SizeButton, TypeButton} from '../../enums'
+import { SizeButton, TypeButton } from '../../enums'
 
 export default {
   name: 'BulkAction',
   components: { Button },
   data() {
-    return { SizeButton, TypeButton}
+    return { SizeButton, TypeButton }
   },
   methods: mapMutations(['CHECK_ALL_TODO', 'REMOVE_TODO_CHECKED'])
 }
@@ -45,10 +45,22 @@ export default {
   padding-left: 15px;
 }
 
+.actions-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.done-btn {
+  margin-right: 10px;
+}
+
 .bulk-form {
-  padding: 15px;
-  background: #ccc;
-  line-height: 2;
-  font-family: sans-serif;
+  display: flex;
+  padding: 0 10px;
+  border-top: 1px solid;
+  background-color: rgb(190, 190, 190);
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

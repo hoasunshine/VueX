@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <div class="row container-fluid">
-      <div class="col-100">
-        <input type="text" placeholder="Search..." v-model="search" />
-      </div>
-      <div class="col-100">
-        <TodoItem v-for="todo in filteredData" :key="todo.id" :todo="todo" />
-      </div>
+  <div class="todo-form">
+    <div class="input-type">
+      <input type="text" placeholder="Search..." v-model="search" />
     </div>
-    <div class="row container-fluid"><BulkAction v-if="isBulkActions"/></div>
+    <div >
+      <TodoItem v-for="todo in filteredData" :key="todo.id" :todo="todo" />
+    </div>
+    <div class="bulk-actions"><BulkAction v-if="isBulkActions" /></div>
   </div>
 </template>
 
@@ -34,11 +32,21 @@ export default {
     }
   },
   created() {
-    this.getTodos();
+    this.getTodos()
   },
   methods: mapActions(['getTodos'])
 }
 </script>
 
-<style scoped>
+<style>
+.todo-form {
+  margin-bottom: 100px;
+}
+
+.bulk-actions {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 </style>

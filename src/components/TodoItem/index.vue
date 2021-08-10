@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="row todoItem">
-      <div class="col-50 checkbox-title">
+    <div class="todo-item">
+      <div class="checkbox-title">
         <input
           type="checkbox"
           :checked="todo.completed"
@@ -9,8 +9,8 @@
         />
         <span class="title-item">{{ todo.title }}</span>
       </div>
-      <div class="row col-50">
-        <div class="col-50">
+      <div class="actions-btn">
+        <div class="done-btn">
           <Button
             :type="'button'"
             :styleType="TypeButton.primary"
@@ -19,7 +19,7 @@
             :onclick="showDetail"
           />
         </div>
-        <div class="col-50">
+        <div class="remove-btn">
           <Button
             :type="'button'"
             :styleType="TypeButton.danger"
@@ -31,7 +31,9 @@
         </div>
       </div>
     </div>
-    <TaskAction :todo="todo" :isUpdate="true" v-if="show" />
+    <div class="update-form" v-if="show">
+      <TaskAction :todo="todo" :isUpdate="true" />
+    </div>
   </div>
 </template>
 
@@ -51,7 +53,7 @@ export default {
       show,
       loading: false,
       SizeButton,
-      TypeButton 
+      TypeButton
     }
   },
   methods: {
@@ -68,15 +70,23 @@ export default {
 </script>
 
 <style>
-.todoItem {
+.todo-item {
   margin-top: 20px;
   border: 1px solid #ccc;
   padding: 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .checkbox-title {
   text-align: left;
   margin-top: 7px;
+  align-items: center;
+  display: flex;
+}
+
+.actions-btn {
+  display: flex;
 }
 
 input[type='checkbox'] {
@@ -89,12 +99,10 @@ input[type='checkbox'] {
   cursor: pointer;
 }
 
-.title-item {
-  font-weight: 600;
-}
-
-.completed {
-  background: rgb(199, 218, 243);
+.update-form {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-top: none;
 }
 
 @media screen and (min-width: 600px) {
