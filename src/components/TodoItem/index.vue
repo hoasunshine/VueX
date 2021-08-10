@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="todo-item">
-      <div class="checkbox-title">
+    <div class="row todo-item">
+      <div class="col-6 checkbox-title">
         <input
           type="checkbox"
           :checked="todo.completed"
@@ -9,30 +9,32 @@
         />
         <span class="title-item">{{ todo.title }}</span>
       </div>
-      <div class="actions-btn">
-        <div class="done-btn">
-          <Button
-            :type="'button'"
-            :styleType="TypeButton.primary"
-            :size="SizeButton.default"
-            :title="'Detail'"
-            :onclick="showDetail"
-          />
-        </div>
-        <div class="remove-btn">
-          <Button
-            :type="'button'"
-            :styleType="TypeButton.danger"
-            :size="SizeButton.default"
-            :title="'Remove'"
-            :loading="loading"
-            :onclick="remove"
-          />
+      <div class="col-6 actions-btn">
+        <div class="row">
+          <div class="col-6 col-s-12 detail-btn">
+            <Button
+              :type="'button'"
+              :styleType="TypeButton.primary"
+              :size="SizeButton.default"
+              :title="'Detail'"
+              :onclick="showDetail"
+            />
+          </div>
+          <div class="col-6 col-s-12 remove-btn">
+            <Button
+              :type="'button'"
+              :styleType="TypeButton.danger"
+              :size="SizeButton.default"
+              :title="'Remove'"
+              :loading="loading"
+              :onclick="remove"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div class="update-form" v-if="show">
-      <TaskAction :todo="{...todo}" :isUpdate="true" />
+      <TaskAction :todo="{ ...todo }" :isUpdate="true" />
     </div>
   </div>
 </template>

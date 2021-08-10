@@ -3,8 +3,12 @@
     <div class="input-type">
       <input type="text" placeholder="Search..." v-model="search" />
     </div>
-    <div >
-      <TodoItem v-for="todo in [...filteredData]" :key="todo.id" :todo="{...todo}" />
+    <div>
+      <TodoItem
+        v-for="todo in [...filteredData]"
+        :key="todo.id"
+        :todo="{ ...todo }"
+      />
     </div>
     <div class="bulk-actions"><BulkAction v-if="isBulkActions" /></div>
   </div>

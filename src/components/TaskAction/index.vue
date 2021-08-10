@@ -1,29 +1,28 @@
 <template>
-  <form @submit="onSubmit">
-    <div class="input-type">
+  <form class="row" @submit="onSubmit">
+    <div class="col-s-12 input-type">
       <Input v-model="currentVal.title" :required="true" />
     </div>
-    <div class="title">
+    <div class="col-s-12 title">
       <label>Description</label>
     </div>
-    <div class="input-type">
+    <div class="col-s-12 input-type">
       <Textarea v-model="currentVal.description" />
     </div>
     <div class="row">
-      <div class="col-50 title">
+      <div class="col-6 col-s-12 title">
         <label>Due Date</label>
         <div class="date-input">
           <Date v-model="currentVal.date" />
         </div>
       </div>
-      <div class="col-50 title">
+      <div class="col-6 col-s-12 title">
         <label>Piority</label>
         <div class="select-input">
           <Select v-model="currentVal.piority" />
         </div>
       </div>
     </div>
-
     <Button
       :type="'submit'"
       :styleType="TypeButton.success"

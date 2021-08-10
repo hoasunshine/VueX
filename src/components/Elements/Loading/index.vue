@@ -24,7 +24,6 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   border-top-color: rgb(255, 255, 255);
-  margin-bottom: 10rem;
   animation: 1s spin infinite ease-in-out reverse;
 }
 
