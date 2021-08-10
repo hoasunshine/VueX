@@ -7,7 +7,8 @@ const todosModules = {
 
     getters: {
         todos: state => state.todos,
-        todosIsChecked: state => state.todos.filter(todo => todo.completed)
+        todosIsChecked: state => state.todos.filter(todo => todo.completed),
+        isBulkActions: state => state.todos.some(todo => todo.completed)
     },
 
     actions: {
@@ -49,6 +50,12 @@ const todosModules = {
         MARK_COMPLETE(state, todoId) {
             state.todos.map(todo => {
                 if (todo.id === todoId) todo.completed = !todo.completed;
+                return todo;
+            })
+        },
+        CHECK_ALL_TODO(state) {
+            state.todos.map(todo => {
+                todo.completed = true;
                 return todo;
             })
         },

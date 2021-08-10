@@ -36,6 +36,7 @@
             :size="SizeButton.full"
             :title="isUpdate ? 'Update' : 'Add'"
             :loading="loading"
+            :onclick="() => {}"
           />
         </div>
       </div>

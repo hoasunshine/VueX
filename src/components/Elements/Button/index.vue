@@ -8,6 +8,7 @@
         [getSize(styleType)]: true,
         ['disabled']: loading || disabled
       }"
+      @click="onclick"
     >
       <div v-if="loading" class="spin"><Loading /></div>
       {{ title }}
@@ -29,6 +30,7 @@ export default {
     type: String,
     styleType: String,
     disabled: Boolean,
+    onclick: Function
   },
   data() {
     const getSize = size => {

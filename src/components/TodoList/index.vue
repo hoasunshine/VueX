@@ -8,7 +8,7 @@
         <TodoItem v-for="todo in filteredData" :key="todo.id" :todo="todo" />
       </div>
     </div>
-    <div class="row container-fluid"><BulkAction /></div>
+    <div class="row container-fluid"><BulkAction v-if="isBulkActions"/></div>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['todos']),
+    ...mapGetters(['todos', 'isBulkActions']),
     filteredData() {
       return this.todos.filter(todo => {
         return todo.title.toLowerCase().includes(this.search.toLowerCase())
