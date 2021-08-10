@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="row container-fluid">
-      <h1>To Do List</h1>
       <div class="col-100">
         <input type="text" placeholder="Search..." v-model="search" />
       </div>
@@ -14,9 +13,9 @@
 </template>
 
 <script>
-import TodoItem from './TodoItem.vue'
+import TodoItem from '../TodoItem'
 import BulkAction from '../BulkAction'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'TodoList',
@@ -33,7 +32,11 @@ export default {
         return todo.title.toLowerCase().includes(this.search.toLowerCase())
       })
     }
-  }
+  },
+  created() {
+    this.getTodos();
+  },
+  methods: mapActions(['getTodos'])
 }
 </script>
 

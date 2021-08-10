@@ -1,10 +1,9 @@
 <template>
   <div class="container-fluid">
-    <h1>Add Task</h1>
     <form @submit="onSubmit">
       <div class="row">
         <div class="col-100">
-          <input type="text" placeholder="Add new task..." v-model="title" />
+          <Input v-model="currentVal.title" :required="true" />
         </div>
       </div>
       <div class="row">
@@ -12,30 +11,30 @@
           <label>Description</label>
         </div>
         <div class="col-100">
-          <textarea cols="30" rows="5" v-model="description"></textarea>
+          <Textarea v-model="currentVal.description" />
         </div>
       </div>
       <div class="row">
         <div class="col-50 title">
           <label>Due Date</label>
           <div class="date-input">
-            <input type="date" v-model="date" />
+            <Date v-model="currentVal.date" />
           </div>
         </div>
         <div class="col-50 title">
           <label>Piority</label>
           <div class="select-input">
-            <select v-model="piority">
-              <option value="nomal" selected>Nomal</option>
-              <option value="low">Low</option>
-              <option value="high">High</option>
-            </select>
+            <Select v-model="currentVal.piority" />
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-100 submit-btn">
-          <button type="submit" class="btn-success">Submit</button>
+        <div class="col-100">
+          <Button
+          :type="TypeButton.success"
+          :size="SizeButton.full"
+          :title="isUpdate ? 'Update' : 'Add'"
+          :loading="loading"/>
         </div>
       </div>
     </form>
@@ -45,33 +44,48 @@
 <script>
 import { mapActions } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
+import { getCurrentTime } from '../../helpers'
+
+import Input from '../Elements/Input'
+import Textarea from '../Elements/Textarea'
+import Date from '../Elements/Date'
+import Select from '../Elements/Select'
+import Button from '../Elements/Button'
+import { TypeButton, SizeButton } from '../../enums'
+
 export default {
-  name: 'AddTask',
+  name: 'TaskAction',
+  components: { Input, Textarea, Date, Select, Button},
+  props: {
+    isUpdate: Boolean,
+    todo: Object
+  },
   data() {
-    return {
+    const defaultVal = {
       title: '',
       description: '',
-      date: '',
+      date: getCurrentTime(),
       piority: 'nomal'
+    }
+    const currentVal = this.$props.isUpdate ? this.$props.todo : defaultVal
+    return {
+      defaultVal,
+      currentVal,
+      loading,
+      TypeButton,
+      SizeButton
     }
   },
   methods: {
     ...mapActions(['addTodo']),
+    resetForm() {
+      this.currentVal = this.defaultVal
+    },
     onSubmit(event) {
+      this.loading = true; 
       event.preventDefault()
-      let newTodo = {
-        id: uuidv4(),
-        title: this.title,
-        description: this.description,
-        date: new Date(this.date),
-        piority: this.piority,
-        completed: false
-      }
-      this.addTodo(newTodo)
-      this.title = ''
-      this.description = ''
-      this.date = ''
-      this.piority = ''
+      this.addTodo(...this.currentVal, { id: uuidv4(), completed: false })
+      this.resetForm()
     }
   }
 }
@@ -99,9 +113,6 @@ textarea {
   resize: vertical;
 }
 
-.submit-btn {
-  margin-top: 20px;
-}
 button {
   color: white;
   padding: 12px 20px;

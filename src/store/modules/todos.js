@@ -1,33 +1,9 @@
-import { v4 as uuidv4 } from 'uuid'
+import axios from "axios";
 
 const todosModules = {
     state: {
         todos: [
-            {
-                id: uuidv4(),
-                title: 'Do homework',
-                date: new Date().toISOString().slice(0, 10),
-                piority: 'nomal',
-                description: '',
-                completed: true
-            },
-            {
-                id: uuidv4(),
-                title: 'Do housework',
-                date: new Date().toISOString().slice(0, 10),
-                piority: 'nomal',
-                description: '',
-                completed: false
-            },
-            {
-                id: uuidv4(),
-                title: 'Do something',
-                date: new Date().toISOString().slice(0, 10),
-                piority: 'low',
-                description: '',
-                completed: false
-            }
-        ].sort((a, b) => new Date(a.date) - new Date(b.date))
+        ]
     },
 
     getters: {
@@ -36,14 +12,37 @@ const todosModules = {
     },
 
     actions: {
-        addTodo({ commit }, newTodo) {
-            commit('ADD_TODO', newTodo);
+        async getTodos({ commit }) {
+            try {
+                const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=3`);
+                commit('GET_TODOS', response.data);
+            } catch (error) {
+                console.log(error);
+            }
         },
-        updateTodo({ commit }, newTodo) {
-            commit('UPDATE_TODO', newTodo);
+        async addTodo({ commit }, newTodo) {
+            try {
+                await axios.post(`https://jsonplaceholder.typicode.com/todos`, newTodo);
+                commit('ADD_TODO', newTodo);
+            } catch (error) {
+                console.log(error);
+            }
         },
-        deleteTodo({ commit }, todoId) {
-            commit('DELETE_TODO', todoId);
+        async updateTodo({ commit }, todoId, newTodo) {
+            try {
+                await axios.put(`https://jsonplaceholder.typicode.com/todos/${todoId}`, newTodo);
+                commit('UPDATE_TODO', todoId, newTodo);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async deleteTodo({ commit }, todoId) {
+            try {
+                await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`)
+                commit('DELETE_TODO', todoId);
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
 
@@ -57,19 +56,15 @@ const todosModules = {
         REMOVE_TODO_CHECKED(state) {
             state.todos = state.todos.filter(todo => !todo.completed);
         },
-        ADD_TODO(state, newTodo) {
-            state.todos.unshift(newTodo);
+        GET_TODOS(state, todos) {
+            state.todos = todos;
         },
-        UPDATE_TODO(state, newTodo) {
-            state.todos.map(todo => {
-                if (todo.id === newTodo.id) {
-                    todo.title = newTodo.title;
-                    todo.completed = newTodo.completed;
-                    todo.date = newTodo.date;
-                    todo.piority = newTodo.piority;
-                }
-                return todo;
-            })
+        ADD_TODO(state, newTodo) {
+            state.todos.push(newTodo);
+        },
+        UPDATE_TODO(state, todoId, newTodo) {
+            const index = state.todos.findIndex(todo => todo.id === todoId);
+            state.todos[index] = newTodo;
         },
         DELETE_TODO(state, todoId) {
             state.todos = state.todos.filter(todo => todo.id != todoId);

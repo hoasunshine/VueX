@@ -2,21 +2,27 @@
   <div id="app">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-50"><AddTask /></div>
-        <div class="col-50"><TodoList /></div>
+        <div class="col-50">
+          <h1>Add Task</h1>
+          <TaskAction />
+        </div>
+        <div class="col-50">
+          <h1>To Do List</h1>
+          <TodoList />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AddTask from "./components/AddTask";
-import TodoList from "./components/TodoList";
+import TaskAction from './components/TaskAction'
+import TodoList from './components/TodoList'
 
 export default {
-  name: "App",
-  components: { AddTask, TodoList },
-};
+  name: 'App',
+  components: { TaskAction, TodoList }
+}
 </script>
 
 <style>
@@ -54,7 +60,7 @@ export default {
 }
 
 .row:after {
-  content: "";
+  content: '';
   display: table;
   clear: both;
 }
