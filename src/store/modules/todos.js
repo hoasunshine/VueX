@@ -29,10 +29,10 @@ const todosModules = {
                 console.log(error);
             }
         },
-        async updateTodo({ commit }, todoId, newTodo) {
+        async updateTodo({ commit }, newTodo) {
             try {
-                await axios.put(`https://jsonplaceholder.typicode.com/todos/${todoId}`, newTodo);
-                commit('UPDATE_TODO', todoId, newTodo);
+                await axios.put(`https://jsonplaceholder.typicode.com/todos/${newTodo.id}`, newTodo);
+                commit('UPDATE_TODO', newTodo);
             } catch (error) {
                 console.log(error);
             }
@@ -65,21 +65,20 @@ const todosModules = {
         },
         GET_TODOS(state, todos) {
             state.todos = todos.map(todo => ({
-                    title: todo.title,
-                    date: getCurrentTime(),
-                    id: todo.id,
-                    piority: 'normal',
-                    description: '',
-                    completed: todo.completed
-                }))
-                .sort((a, b) => new Date(a.date) - new Date(b.date));
+                title: todo.title,
+                date: getCurrentTime(),
+                id: todo.id,
+                piority: 'normal',
+                description: '',
+                completed: todo.completed
+            })).sort((a, b) => new Date(a.date) - new Date(b.date));
         },
         ADD_TODO(state, newTodo) {
             state.todos.push(newTodo);
             state.todos.sort((a, b) => new Date(a.date) - new Date(b.date));
         },
-        UPDATE_TODO(state, todoId, newTodo) {
-            const index = state.todos.findIndex(todo => todo.id === todoId);
+        UPDATE_TODO(state, newTodo) {
+            const index = state.todos.findIndex(todo => todo.id === newTodo.id);
             state.todos[index] = newTodo;
         },
         DELETE_TODO(state, todoId) {

@@ -94,11 +94,9 @@ export default {
       event.preventDefault()
       this.loading = true
       if (this.isUpdate) {
-        await this.updateTodo(this.currentVal.id, this.currentVal).finally(
-          () => {
-            this.loading = false
-          }
-        )
+        await this.updateTodo(this.currentVal).finally(() => {
+          this.loading = false
+        })
       } else {
         await this.addTodo({
           ...this.currentVal,
