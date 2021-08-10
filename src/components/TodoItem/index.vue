@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="['row todoItem', todo.completed ? 'completed' : '']">
+    <div class="row todoItem">
       <div class="col-50 checkbox-title">
         <input
           type="checkbox"

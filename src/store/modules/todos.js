@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCurrentTime } from '../../helpers';
 
 const todosModules = {
     state: {
@@ -63,10 +64,19 @@ const todosModules = {
             state.todos = state.todos.filter(todo => !todo.completed);
         },
         GET_TODOS(state, todos) {
-            state.todos = todos;
+            state.todos = todos.map(todo => ({
+                    title: todo.title,
+                    date: getCurrentTime(),
+                    id: todo.id,
+                    piority: 'normal',
+                    description: '',
+                    completed: todo.completed
+                }))
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
         },
         ADD_TODO(state, newTodo) {
             state.todos.push(newTodo);
+            state.todos.sort((a, b) => new Date(a.date) - new Date(b.date));
         },
         UPDATE_TODO(state, todoId, newTodo) {
             const index = state.todos.findIndex(todo => todo.id === todoId);
