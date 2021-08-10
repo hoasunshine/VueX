@@ -24,13 +24,13 @@
         </div>
       </div>
     </div>
-    <UpdateTask :todo="todo" v-if="show" />
+    <TaskAction :todo="todo" :isUpdate="true" v-if="show" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations } from 'vuex'
-import UpdateTask from '../UpdateTask'
+import TaskAction from '../TaskAction'
 
 export default {
   name: 'TodoItem',
@@ -39,7 +39,7 @@ export default {
     let show = false
     return { show }
   },
-  components: { UpdateTask },
+  components: { TaskAction },
   methods: {
     ...mapMutations(['MARK_COMPLETE']),
     ...mapActions(['deleteTodo']),

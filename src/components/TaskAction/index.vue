@@ -31,10 +31,12 @@
       <div class="row">
         <div class="col-100">
           <Button
-          :type="TypeButton.success"
-          :size="SizeButton.full"
-          :title="isUpdate ? 'Update' : 'Add'"
-          :loading="loading"/>
+            :type="'submit'"
+            :styleType="TypeButton.success"
+            :size="SizeButton.full"
+            :title="isUpdate ? 'Update' : 'Add'"
+            :loading="loading"
+          />
         </div>
       </div>
     </form>
@@ -55,7 +57,7 @@ import { TypeButton, SizeButton } from '../../enums'
 
 export default {
   name: 'TaskAction',
-  components: { Input, Textarea, Date, Select, Button},
+  components: { Input, Textarea, Date, Select, Button },
   props: {
     isUpdate: Boolean,
     todo: Object
@@ -71,21 +73,44 @@ export default {
     return {
       defaultVal,
       currentVal,
-      loading,
+      loading: false,
       TypeButton,
       SizeButton
     }
   },
   methods: {
-    ...mapActions(['addTodo']),
+    ...mapActions(['addTodo', 'updateTodo']),
     resetForm() {
-      this.currentVal = this.defaultVal
+      this.currentVal = {
+        id: '',
+        title: '',
+        description: '',
+        date: getCurrentTime(),
+        piority: 'nomal'
+      }
     },
-    onSubmit(event) {
-      this.loading = true; 
+    async onSubmit(event) {
       event.preventDefault()
-      this.addTodo(...this.currentVal, { id: uuidv4(), completed: false })
-      this.resetForm()
+      this.loading = true
+      if (this.isUpdate) {
+        await this.updateTodo(this.currentVal.id, this.currentVal).finally(
+          () => {
+            this.loading = false
+          }
+        )
+      } else {
+        await this.addTodo({
+          ...this.currentVal,
+          id: uuidv4(),
+          completed: false
+        })
+          .then(() => {
+            this.resetForm()
+          })
+          .finally(() => {
+            this.loading = false
+          })
+      }
     }
   }
 }

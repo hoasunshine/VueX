@@ -1,12 +1,14 @@
 <template>
   <div class="submit-btn">
-    <button type="submit"
-    :disabled="loading || disabled"
-    :class="{
-      [getType(type)]: true,
-      [getSize(size)]: true,
-      ['disabled']: loading || disabled
-    }">
+    <button
+      :type="type"
+      :disabled="loading || disabled"
+      :class="{
+        [getType(styleType)]: true,
+        [getSize(styleType)]: true,
+        ['disabled']: loading || disabled
+      }"
+    >
       <div v-if="loading" class="spin"><Loading /></div>
       {{ title }}
     </button>
@@ -15,7 +17,7 @@
 
 <script>
 import Loading from '../Loading'
-import { ButtonSize, ButtonType } from '../../../enums'
+import { SizeButton, TypeButton } from '../../../enums'
 
 export default {
   name: 'Button',
@@ -25,14 +27,15 @@ export default {
     title: String,
     size: String,
     type: String,
-    disable: Boolean
+    styleType: String,
+    disabled: Boolean,
   },
   data() {
     const getSize = size => {
       switch (size) {
-        case ButtonSize.default:
+        case SizeButton.default:
           return 'default'
-        case ButtonSize.full:
+        case SizeButton.full:
           return 'full'
         default:
           return ''
@@ -40,17 +43,17 @@ export default {
     }
     const getType = type => {
       switch (type) {
-        case ButtonType.primary:
+        case TypeButton.primary:
           return 'bg-primary'
-        case ButtonType.success:
+        case TypeButton.success:
           return 'bg-success'
-        case ButtonType.danger:
+        case TypeButton.danger:
           return 'bg-danger'
         default:
           return 'bg-primary'
       }
     }
-    return {getSize, getType}
+    return { getSize, getType }
   }
 }
 </script>

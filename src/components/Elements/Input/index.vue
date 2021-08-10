@@ -1,8 +1,9 @@
 <template>
   <input
     type="text"
+    :value="value"
     :required="required"
-    :placeholder="!!type ? 'Search...' : 'Add new task...'"
+    :placeholder="!!placeholder ? 'Search...' : 'Add new task...'"
     @input="$emit('input', $event.target.value)"
   />
 </template>
@@ -12,7 +13,7 @@ export default {
   name: 'Input',
   props: {
     required: Boolean,
-    type: String,
+    placeholder: String,
     value: String
   }
 }

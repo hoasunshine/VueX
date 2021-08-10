@@ -1,12 +1,13 @@
 <template>
   <div>
-      <textarea cols="30" rows="5"></textarea>
+      <textarea :value="value" cols="30" rows="5"></textarea>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'Textarea'
+    name: 'Textarea',
+    props: {value: String}
 }
 </script>
 

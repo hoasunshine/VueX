@@ -2,8 +2,7 @@ import axios from "axios";
 
 const todosModules = {
     state: {
-        todos: [
-        ]
+        todos: []
     },
 
     getters: {
