@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { v4 as uuidv4 } from 'uuid'
+import { mapActions, mapGetters } from 'vuex'
 import { getCurrentTime } from '../../helpers'
 
 import Input from '../Elements/Input'
@@ -59,7 +58,8 @@ export default {
       title: '',
       description: '',
       date: getCurrentTime(),
-      piority: 'nomal'
+      piority: 'nomal',
+      completed: false,
     }
     const currentVal = this.$props.isUpdate ? this.$props.todo : defaultVal
     return {
@@ -70,16 +70,22 @@ export default {
       SizeButton
     }
   },
+  computed: mapGetters(['max_id']),
   methods: {
     ...mapActions(['addTodo', 'updateTodo']),
     resetForm() {
       this.currentVal = {
-        id: '',
         title: '',
         description: '',
         date: getCurrentTime(),
         piority: 'nomal'
       }
+    },
+    incrementId() {
+      let id = this.max_id;
+      if (!id) id = 0;
+      else id++;
+      return id;
     },
     async onSubmit(event) {
       event.preventDefault()
@@ -90,9 +96,7 @@ export default {
         })
       } else {
         await this.addTodo({
-          ...this.currentVal,
-          id: uuidv4(),
-          completed: false
+          ...this.currentVal, id: this.incrementId()
         })
           .then(() => {
             this.resetForm()

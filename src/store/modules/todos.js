@@ -9,7 +9,10 @@ const todosModules = {
     getters: {
         todos: state => state.todos,
         todosIsChecked: state => state.todos.filter(todo => todo.completed),
-        isBulkActions: state => state.todos.some(todo => todo.completed)
+        isBulkActions: state => state.todos.some(todo => todo.completed),
+        max_id: state => Math.max.apply(Math, state.todos.map(todo => {
+            return todo.id;
+        }))
     },
 
     actions: {
