@@ -86,7 +86,6 @@ export default {
       this.loading = true
       if (this.isUpdate) {
         await this.updateTodo(this.currentVal).finally(() => {
-          alert('Updated!!!')
           this.loading = false
         })
       } else {

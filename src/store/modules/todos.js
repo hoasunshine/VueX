@@ -30,7 +30,12 @@ const todosModules = {
             }
         },
         async updateTodo({ commit }, newTodo) {
-            commit('UPDATE_TODO', newTodo);
+            try {
+                await axios.put(`https://jsonplaceholder.typicode.com/todos/${newTodo.id}`, newTodo);
+                commit('UPDATE_TODO', newTodo);
+            } catch (error) {
+                console.log(error);
+            }
         },
         async deleteTodo({ commit }, todoId) {
             try {
