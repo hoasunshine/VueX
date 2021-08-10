@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="update-form" v-if="show">
-      <TaskAction :todo="todo" :isUpdate="true" />
+      <TaskAction :todo="{...todo}" :isUpdate="true" />
     </div>
   </div>
 </template>

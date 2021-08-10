@@ -81,8 +81,10 @@ const todosModules = {
             state.todos.sort((a, b) => new Date(a.date) - new Date(b.date));
         },
         UPDATE_TODO(state, newTodo) {
-            const index = state.todos.findIndex(todo => todo.id === newTodo.id);
-            state.todos[index] = newTodo;
+            let newState = [...state.todos];
+            const index = newState.findIndex(el => el.id === newTodo.id);
+            newState[index] = newTodo;
+            state.todos = newState;
         },
         DELETE_TODO(state, todoId) {
             state.todos = state.todos.filter(todo => todo.id != todoId);
